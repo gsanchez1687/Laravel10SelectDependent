@@ -82,7 +82,9 @@
     </div>
     <script>
         $(document).ready(function() {
-            $('.js-example-basic-single').select2();
+            $('.js-example-basic-single').select2({
+              theme: "classic",
+            });
         });
 
         function loadCities(selectCountries) {
