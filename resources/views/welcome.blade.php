@@ -46,7 +46,7 @@
                     <div class="mb-3 row">
                       <label for="cities" class="col-sm-2 col-form-label">Ciudades</label>
                       <div class="col-sm-10">
-                        <select class="form-control" name="cities" id="cities">
+                        <select onchange="loadmunicipalities(this)" class="form-control" name="cities" id="cities">
                           <option value="">Selecione una ciudad..</option>
                           @foreach ($cities as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
@@ -95,11 +95,32 @@
                     option.value = city.id;
                     option.innerHTML = city.name;
                     cities.append(option);
+                    loadmunicipalities(cities)
                   
                   })
                }
 
+               function loadmunicipalities(selectCities){
+                 let cityId = selectCities.value;
+                 fetch('/api/city/municipality/'+cityId).then(function(response){
+                    return response.json();
+                 }).then(function(data){
+                    let municipalities = document.getElementById('municipalities');
+                    municipalities.innerHTML = '';
+                    buildmunicipalitiesSelect(data);
+                 })
+               }
 
+               function buildmunicipalitiesSelect(data){
+                  let municipalities = document.getElementById('municipalities');
+                  data.forEach(function(municipality){
+                    let option = document.createElement('option');
+                    option.value = municipality.id;
+                    option.innerHTML = municipality.name;
+                    municipalities.append(option);
+                  
+                  })
+               }
           </script>
     </body>
 </html>

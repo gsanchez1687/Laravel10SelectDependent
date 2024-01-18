@@ -29,5 +29,10 @@ Route::get('api/country/city/{id}', function ($id) {
     
     $cities = cities::where('country_id',$id)->get();
     return response()->json($cities);
+});
 
+Route::get('api/city/municipality/{id}', function ($id) {
+    
+    $municipalities = municipalities::where('city_id',$id)->get();
+    return response()->json($municipalities);
 });
