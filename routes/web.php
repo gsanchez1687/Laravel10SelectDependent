@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\countries;
+use App\Models\cities;
+use App\Models\municipalities;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+    $countries = countries::all();
+    $cities = cities::all();
+    $municipalities = municipalities::all();
+    return view('welcome',compact('countries','cities','municipalities'));
+
+});
+
+Route::get('api/country/city/{id}', function ($id) {
+    
+    $cities = cities::where('country_id',$id)->get();
+    return response()->json($cities);
+
 });
